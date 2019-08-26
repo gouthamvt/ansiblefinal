@@ -3,6 +3,6 @@
   hosts: 172.31.12.205
   become: true
   roles:
-    - 'ansible-role-production'
+    - 'ansibleworkspace/roles/ansible-role-production'
 
 
