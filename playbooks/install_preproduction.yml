@@ -1,7 +1,8 @@
 ---
-- hosts: 172.31.12.84
+- name: Preproduction Environment
+  hosts: 172.31.12.205
   become: true
   roles:
-    - 'ansible'
+    - 'ansible-role-production'
 
 
