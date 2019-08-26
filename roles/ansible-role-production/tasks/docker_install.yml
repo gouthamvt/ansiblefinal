@@ -1,0 +1,6 @@
+---
+- name: Update apt and install docker-ce
+  apt:
+     name: "{{ docker_pkg_name }}"
+     update_cache: yes
+     state: latest

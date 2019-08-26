@@ -1,0 +1,14 @@
+---
+- name: install docker if not present
+#   - include_tasks: "sys_pkg.yml"
+#   - include_tasks: "docker_key.yml"
+#   - include_tasks: "docker_repo.yml"
+#   - include_tasks: "docker_install.yml
+#   apt:
+#     name: "{{ docker_pkg_name }}"
+#     update_cache: yes
+#     state: latest
+  debug:
+    var: "{{ docker_existence }}".stderr == ''  
+ 
+
