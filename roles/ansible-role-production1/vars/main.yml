@@ -19,8 +19,8 @@ mysql_result: ''
 images:
   - 'consol/tomcat-7.0'
   - 'mysql'
-tomcat_bind_source: '/home/root1/tomcat-bind'
+tomcat_bind_source: '/home/ubuntu/tomcat-bind'
 tomcat_bind_target: '/opt/tomcat/webapps'
-warfile_url: 'http://35.168.247.221:9030/nexus/content/repositories/releases/com/pratian/prabhav1/{{ build_number }}/prabhav1-{{ build_number }}.war'
+warfile_url: 'http://35.168.247.221:9030/nexus/content/repositories/releases/nexus/happytrip/prabhav-1/{{ build_number }}/prabhav-1-{{ build_number }}.war'
 
 
