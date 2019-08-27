@@ -1,6 +1,6 @@
 ---
-- name: Preproduction Environment
-  hosts: Ashish
+- name: production Environment
+  hosts: Amazon
   become: true
   roles:
     - 'ansibleworkspace/roles/ansible-role-production'

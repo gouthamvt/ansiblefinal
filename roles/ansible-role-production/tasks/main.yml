@@ -1,11 +1,11 @@
 ---
 
-#- include_tasks: "sys_pkg.yml"
-#- include_tasks: "docker_key.yml"
-#- include_tasks: "docker_repo.yml"
-#- include_tasks: "docker_install.yml"
-#- include_tasks: "docker_check.yml"
-#- include_tasks: "install_docker.yml"
+- include_tasks: "sys_pkg.yml"
+- include_tasks: "docker_key.yml"
+- include_tasks: "docker_repo.yml"
+- include_tasks: "docker_install.yml"
+- include_tasks: "docker_check.yml"
+- include_tasks: "install_docker.yml"
 - include_tasks: "container_get.yml"
 - include_tasks: "check_tomcat_container.yml"
 - include_tasks: "check_mysql_container.yml"
