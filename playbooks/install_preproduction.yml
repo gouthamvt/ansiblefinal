@@ -1,6 +1,6 @@
 ---
 - name: Preproduction Environment
-  hosts: 172.31.12.205
+  hosts: all
   become: true
   roles:
     - 'ansibleworkspace/roles/ansible-role-production'
