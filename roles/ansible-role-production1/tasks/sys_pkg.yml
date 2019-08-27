@@ -1,0 +1,7 @@
+---
+- name: installing system dependencies
+  apt: 
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  loop: "{{ lookup('list', dependencies) }}"

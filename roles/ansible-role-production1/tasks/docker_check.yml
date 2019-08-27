@@ -1,0 +1,8 @@
+---
+- name: check if package is installed
+  shell: dpkg-query -l docker-ce
+  register: dpkg_result
+- set_fact:
+   docker_result: "{{ dpkg_result }}"
+
+

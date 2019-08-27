@@ -1,0 +1,5 @@
+---
+- name: create directory to bind with tomcat
+  file:
+    path: "{{ tomcat_bind_source }}"
+    state: directory
