@@ -6,6 +6,7 @@ dependencies:
   - 'ca-certificates'
   - 'curl'
   - 'software-properties-common'
+  - 'python3-pip'  
 docker_key: "https://download.docker.com/linux/ubuntu/gpg"
 docker_repo: "deb https://download.docker.com/linux/ubuntu bionic stable"
 docker_pkg_name: 'docker-ce'
