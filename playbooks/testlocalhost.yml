@@ -1,0 +1,8 @@
+---
+- name: Testing and Production Environment
+  hosts: all 
+  become: true
+  roles:
+    - '/home/root1/finalproject/ansibleworkspace/roles/ansible-role-production2'
+
+
