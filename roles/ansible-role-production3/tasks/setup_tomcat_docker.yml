@@ -5,7 +5,7 @@
     image: "{{ tomcat_image }}"
     state: started
     ports:
-      - "8070:8080"
+      - "{{ tomcat_port }}:8080"
     volumes: 
       - "{{ tomcat_bind_source }}:{{ tomcat_bind_target }}" 
   when: tomcat_result.exists == false
