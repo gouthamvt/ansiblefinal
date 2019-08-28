@@ -1,0 +1,8 @@
+---
+- name: Testing and Production Environment
+  hosts: Ashish
+  become: true
+  roles:
+    - 'ansibleworkspace/roles/ansible-role-production2'
+
+
