@@ -3,6 +3,7 @@
   docker_container:
     name: "{{ mysql_container }}"
     image: "{{ mysql_image }}"
+    tag: 5.5
     state: started
     ports:
      - "3306:3306" 
