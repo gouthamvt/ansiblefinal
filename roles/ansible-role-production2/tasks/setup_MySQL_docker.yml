@@ -8,4 +8,6 @@
      - "3306:3306" 
     env:
       MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - /home/{{ username }}/mysql-init:/docker-entrypoint-initdb.d/:ro
   when: mysql_result.exists == false

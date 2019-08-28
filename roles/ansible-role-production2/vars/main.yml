@@ -1,5 +1,5 @@
 ---
-# vars file for docker-preproduction
+# vars file for docker-production
 preproduction-ip: localhost
 dependencies:
   - 'apt-transport-https'
@@ -11,11 +11,12 @@ docker_key: "https://download.docker.com/linux/ubuntu/gpg"
 docker_repo: "deb https://download.docker.com/linux/ubuntu bionic stable"
 docker_pkg_name: 'docker-ce'
 tomcat_container: 'tomcat7'
-mysql_container: 'mysql'
+mysql_container: 'mysql:5.5'
 tomcat_image: 'consol/tomcat-7.0'
-mysql_image: 'mysql:5.5'
+mysql_image: 'mysql'
 tomcat_result: ''
 mysql_result: ''
+docker_result: ''
 images:
   - 'consol/tomcat-7.0'
   - 'mysql'

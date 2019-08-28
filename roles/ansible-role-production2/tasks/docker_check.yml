@@ -1,6 +1,7 @@
 ---
 - name: check if package is installed
-  shell: dpkg-query -l docker-ce
+  shell: dpkg -l | grep docker-ce
+  ignore_errors: yes
   register: dpkg_result
 - set_fact:
    docker_result: "{{ dpkg_result }}"

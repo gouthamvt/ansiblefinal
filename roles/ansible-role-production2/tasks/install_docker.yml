@@ -1,9 +1,7 @@
 ---
 - name: install docker if not present
-  debug:
-    msg: 'a'
-  notify: system_dependencies  
-  when: docker_result.stdout.find('no packages found') 
+  include: "sys_pkg.yml"
+  when: docker_result.stdout == ''
 
 
 

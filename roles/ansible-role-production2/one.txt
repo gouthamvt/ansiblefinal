@@ -1,0 +1,230 @@
+defaults/main.yml:---
+defaults/main.yml:# defaults file for ansible-role-preporduction-setup
+handlers/main.yml:---
+handlers/main.yml:# handlers file for ansible-role-preporduction-setup
+handlers/main.yml:- name: restart docker daemon service
+handlers/main.yml:  service:
+handlers/main.yml:          name: docker
+handlers/main.yml:          state: restarted
+handlers/main.yml:
+handlers/main.yml:
+handlers/main.yml:
+meta/main.yml:galaxy_info:
+meta/main.yml:  author: your name
+meta/main.yml:  description: your description
+meta/main.yml:  company: your company (optional)
+meta/main.yml:
+meta/main.yml:  # If the issue tracker for your role is not on github, uncomment the
+meta/main.yml:  # next line and provide a value
+meta/main.yml:  # issue_tracker_url: http://example.com/issue/tracker
+meta/main.yml:
+meta/main.yml:  # Choose a valid license ID from https://spdx.org - some suggested licenses:
+meta/main.yml:  # - BSD-3-Clause (default)
+meta/main.yml:  # - MIT
+meta/main.yml:  # - GPL-2.0-or-later
+meta/main.yml:  # - GPL-3.0-only
+meta/main.yml:  # - Apache-2.0
+meta/main.yml:  # - CC-BY-4.0
+meta/main.yml:  license: license (GPL-2.0-or-later, MIT, etc)
+meta/main.yml:
+meta/main.yml:  min_ansible_version: 2.4
+meta/main.yml:
+meta/main.yml:  # If this a Container Enabled role, provide the minimum Ansible Container version.
+meta/main.yml:  # min_ansible_container_version:
+meta/main.yml:
+meta/main.yml:  #
+meta/main.yml:  # Provide a list of supported platforms, and for each platform a list of versions.
+meta/main.yml:  # If you don't wish to enumerate all versions for a particular platform, use 'all'.
+meta/main.yml:  # To view available platforms and versions (or releases), visit:
+meta/main.yml:  # https://galaxy.ansible.com/api/v1/platforms/
+meta/main.yml:  #
+meta/main.yml:  # platforms:
+meta/main.yml:  # - name: Fedora
+meta/main.yml:  #   versions:
+meta/main.yml:  #   - all
+meta/main.yml:  #   - 25
+meta/main.yml:  # - name: SomePlatform
+meta/main.yml:  #   versions:
+meta/main.yml:  #   - all
+meta/main.yml:  #   - 1.0
+meta/main.yml:  #   - 7
+meta/main.yml:  #   - 99.99
+meta/main.yml:
+meta/main.yml:  galaxy_tags: []
+meta/main.yml:    # List tags for your role here, one per line. A tag is a keyword that describes
+meta/main.yml:    # and categorizes the role. Users find roles by searching for tags. Be sure to
+meta/main.yml:    # remove the '[]' above, if you add tags to this list.
+meta/main.yml:    #
+meta/main.yml:    # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
+meta/main.yml:    #       Maximum 20 tags per role.
+meta/main.yml:
+meta/main.yml:dependencies: []
+meta/main.yml:  # List your role dependencies here, one per line. Be sure to remove the '[]' above,
+meta/main.yml:  # if you add dependencies to this list.
+meta/main.yml:  
+tasks/check_mysql_container.yml:---
+tasks/check_mysql_container.yml:- name: Check tomcat container exists
+tasks/check_mysql_container.yml:  docker_container_info:
+tasks/check_mysql_container.yml:    name: "{{ mysql_container }}"
+tasks/check_mysql_container.yml:  register: result
+tasks/check_mysql_container.yml:- set_fact:
+tasks/check_mysql_container.yml:    mysql_result: "{{ result }}"
+tasks/check_mysql_container.yml:
+tasks/check_tomcat_container.yml:---
+tasks/check_tomcat_container.yml:- name: Check tomcat container exists
+tasks/check_tomcat_container.yml:  docker_container_info:
+tasks/check_tomcat_container.yml:    name: "{{ tomcat_container }}"
+tasks/check_tomcat_container.yml:  register: result
+tasks/check_tomcat_container.yml:- set_fact:
+tasks/check_tomcat_container.yml:    tomcat_result: "{{ result }}"
+tasks/check_tomcat_container.yml:
+tasks/container_get.yml:---
+tasks/container_get.yml:- name: Pull  Docker image
+tasks/container_get.yml:  docker_image:
+tasks/container_get.yml:    name: "{{ item }}"
+tasks/container_get.yml:    source: pull
+tasks/container_get.yml:  loop: "{{ lookup('list', images) }}"
+tasks/deploy.yml:---
+tasks/deploy.yml:- debug:
+tasks/deploy.yml:    msg: "{{ build_number }}"
+tasks/deploy.yml:- name: Downloading war file to tomcat folder
+tasks/deploy.yml:  get_url:
+tasks/deploy.yml:    url: "{{ warfile_url }}"
+tasks/deploy.yml:    dest: "{{ tomcat_bind_source }}/app.war"
+tasks/deploy.yml:    mode: '0755'
+tasks/docker_check.yml:---
+tasks/docker_check.yml:- name: check if package is installed
+tasks/docker_check.yml:  shell: dpkg-query -l docker-ce
+tasks/docker_check.yml:  register: dpkg_result
+tasks/docker_check.yml:- set_fact:
+tasks/docker_check.yml:   docker_result: "{{ dpkg_result }}"
+tasks/docker_check.yml:
+tasks/docker_check.yml:
+tasks/docker_config.yml:---
+tasks/docker_config.yml:- name: Configure docker daemon
+tasks/docker_config.yml:  template:
+tasks/docker_config.yml:   src: "{{ docker_template }}"
+tasks/docker_config.yml:   dest: "{{ daemon_config_directory }}"
+tasks/docker_config.yml:  notify: restart docker daemon service
+tasks/docker_install.yml:---
+tasks/docker_install.yml:- name: Update apt and install docker-ce
+tasks/docker_install.yml:  apt:
+tasks/docker_install.yml:     name: "{{ docker_pkg_name }}"
+tasks/docker_install.yml:     update_cache: yes
+tasks/docker_install.yml:     state: latest
+tasks/docker_key.yml:---
+tasks/docker_key.yml:- name: adding docker GPG key
+tasks/docker_key.yml:  apt_key:
+tasks/docker_key.yml:    url: "{{ docker_key }}"
+tasks/docker_key.yml:    state: present
+tasks/docker_pythonmodule.yml:- name: Install Docker Module for Python
+tasks/docker_pythonmodule.yml:  pip:
+tasks/docker_pythonmodule.yml:   name: docker
+tasks/docker_repo.yml:---
+tasks/docker_repo.yml:- name: adding docker package repo
+tasks/docker_repo.yml:  apt_repository:
+tasks/docker_repo.yml:        repo: "{{ docker_repo }}"
+tasks/docker_repo.yml:        state: present
+tasks/install_docker.yml:---
+tasks/install_docker.yml:- name: install docker if not present
+tasks/install_docker.yml:  debug:
+tasks/install_docker.yml:    msg: 'a'
+tasks/install_docker.yml:  notify: system_dependencies  
+tasks/install_docker.yml:  when: docker_result.stdout.find('no packages found') 
+tasks/install_docker.yml:
+tasks/install_docker.yml:
+tasks/install_docker.yml:
+tasks/login.yml:---
+tasks/login.yml:- name: Log into DockerHub
+tasks/login.yml:  docker_login:
+tasks/login.yml:      username: "{{ docker_username }}" 
+tasks/login.yml:      password: "{{ docker_password }}"
+tasks/login.yml:
+tasks/main.yml:---
+tasks/main.yml:- include_tasks: "sys_pkg.yml"
+tasks/main.yml:- include_tasks: "docker_key.yml"
+tasks/main.yml:- include_tasks: "docker_repo.yml"
+tasks/main.yml:- include_tasks: "docker_install.yml"
+tasks/main.yml:- include_tasks: "docker_pythonmodule.yml"
+tasks/main.yml:- include_tasks: "make_bind_path.yml"
+tasks/main.yml:- include_tasks: "container_get.yml"
+tasks/main.yml:- include_tasks: "check_tomcat_container.yml"
+tasks/main.yml:- include_tasks: "check_mysql_container.yml"
+tasks/main.yml:- include_tasks: "setup_tomcat_docker.yml"
+tasks/main.yml:- include_tasks: "setup_MySQL_docker.yml"
+tasks/main.yml:- include_tasks: "deploy.yml"
+tasks/make_bind_path.yml:---
+tasks/make_bind_path.yml:- name: create directory to bind with tomcat
+tasks/make_bind_path.yml:  file:
+tasks/make_bind_path.yml:    path: "{{ tomcat_bind_source }}"
+tasks/make_bind_path.yml:    state: directory
+tasks/setup_MySQL_docker.yml:---
+tasks/setup_MySQL_docker.yml:- name: setup MySQL docker container
+tasks/setup_MySQL_docker.yml:  docker_container:
+tasks/setup_MySQL_docker.yml:    name: "{{ mysql_container }}"
+tasks/setup_MySQL_docker.yml:    image: "{{ mysql_image }}"
+tasks/setup_MySQL_docker.yml:    state: started
+tasks/setup_MySQL_docker.yml:    ports:
+tasks/setup_MySQL_docker.yml:     - "3306:3306" 
+tasks/setup_MySQL_docker.yml:    env:
+tasks/setup_MySQL_docker.yml:      MYSQL_ROOT_PASSWORD: password
+tasks/setup_MySQL_docker.yml:  when: mysql_result.exists == false
+tasks/setup_tomcat_docker.yml:---
+tasks/setup_tomcat_docker.yml:- name: Create tomcat containers 
+tasks/setup_tomcat_docker.yml:  docker_container:
+tasks/setup_tomcat_docker.yml:    name: "{{ tomcat_container }}"
+tasks/setup_tomcat_docker.yml:    image: "{{ tomcat_image }}"
+tasks/setup_tomcat_docker.yml:    state: started
+tasks/setup_tomcat_docker.yml:    ports:
+tasks/setup_tomcat_docker.yml:      - "{{ tomcat_port }}:8080"
+tasks/setup_tomcat_docker.yml:    volumes: 
+tasks/setup_tomcat_docker.yml:      - "{{ tomcat_bind_source }}:{{ tomcat_bind_target }}"
+tasks/setup_tomcat_docker.yml:  when: tomcat_result.exists == false
+tasks/setup_tomcat_docker.yml:
+tasks/setup_tomcat_docker.yml:
+tasks/sys_pkg.yml:---
+tasks/sys_pkg.yml:- name: installing system dependencies
+tasks/sys_pkg.yml:  apt: 
+tasks/sys_pkg.yml:    name: "{{ item }}"
+tasks/sys_pkg.yml:    state: latest
+tasks/sys_pkg.yml:    update_cache: yes
+tasks/sys_pkg.yml:  loop: "{{ lookup('list', dependencies) }}"
+tests/test.yml:---
+tests/test.yml:- hosts: localhost
+tests/test.yml:  remote_user: root
+tests/test.yml:  roles:
+tests/test.yml:    - ansible-role-preporduction-setup
+vars/main.yml:---
+vars/main.yml:# vars file for docker-preproduction
+vars/main.yml:preproduction-ip: localhost
+vars/main.yml:dependencies:
+vars/main.yml:  - 'apt-transport-https'
+vars/main.yml:  - 'ca-certificates'
+vars/main.yml:  - 'curl'
+vars/main.yml:  - 'software-properties-common'
+vars/main.yml:  - 'python3-pip'
+vars/main.yml:docker_key: "https://download.docker.com/linux/ubuntu/gpg"
+vars/main.yml:docker_repo: "deb https://download.docker.com/linux/ubuntu bionic stable"
+vars/main.yml:docker_pkg_name: 'docker-ce'
+vars/main.yml:tomcat_container: 'tomcat7'
+vars/main.yml:mysql_container: 'mysql'
+vars/main.yml:tomcat_image: 'consol/tomcat-7.0'
+vars/main.yml:mysql_image: 'mysql:5.5'
+vars/main.yml:tomcat_result: ''
+vars/main.yml:mysql_result: ''
+vars/main.yml:images:
+vars/main.yml:  - 'consol/tomcat-7.0'
+vars/main.yml:  - 'mysql'
+vars/main.yml:tomcat_bind_source: '/home/{{ username }}/tomcat-bind'
+vars/main.yml:tomcat_bind_target: '/opt/tomcat/webapps'
+vars/main.yml:warfile_url: 'http://35.168.247.221:9030/nexus/content/repositories/releases/nexus/happytrip/prabhav-1/{{ build_number }}/prabhav-1-{{ build_number }}.war'
+vars/main.yml:
+vars/main.yml:
+vars/vault.yml:$ANSIBLE_VAULT;1.1;AES256
+vars/vault.yml:65313232666266613039376163643861396130663939326363666363636532383539366263333730
+vars/vault.yml:3536656338623938336665636633363533303031326536660a356531366364333336373138376335
+vars/vault.yml:39353534663931386533343062633432313432323631653934613833623137643738646335383338
+vars/vault.yml:6533326530313933360a363634303139643832393163303531386131626334363031376163393536
+vars/vault.yml:36656335326666376663313365303735386130633865376265666634666262326666323137383733
+vars/vault.yml:62313033393438353936646366346633656536633435306532383039643335396466326631643238
+vars/vault.yml:383339643539316539313437306135396461

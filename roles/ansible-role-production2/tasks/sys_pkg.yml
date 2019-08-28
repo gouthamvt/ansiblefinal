@@ -5,3 +5,6 @@
     state: latest
     update_cache: yes
   loop: "{{ lookup('list', dependencies) }}"
+
+- name: Continuing installation
+  include: "docker_key.yml"
