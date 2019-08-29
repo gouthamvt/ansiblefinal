@@ -4,7 +4,7 @@
     name: "{{ tomcat_container }}"
     image: "{{ tomcat_image }}"
     state: started
-    network_mode: host
+    network_mode: "host"
     ports:
       - "{{ tomcat_port }}:8080"
     volumes: 
