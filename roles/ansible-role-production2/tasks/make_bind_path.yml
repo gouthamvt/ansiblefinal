@@ -7,3 +7,5 @@
   file:
     path: /home/{{ username }}/mysql-init
     state: directory
+- name: Format tomcat bind folder
+  shell: sudo rm -r "{{ tomcat_bind_source }}"/*
