@@ -13,5 +13,5 @@
 - include_tasks: "setup_tomcat_docker.yml"
 - include_tasks: "setup_MySQL_docker.yml"
 - include_tasks: "setup_MySQL_database.yml"
-- include_tasks: "docker_network_create.yml"
+#- include_tasks: "docker_network_create.yml"
 - include_tasks: "deploy.yml"
