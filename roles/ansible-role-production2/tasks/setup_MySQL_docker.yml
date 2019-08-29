@@ -4,7 +4,6 @@
     name: "{{ mysql_container }}"
     image: mysql:5.5
     state: started
-    network_mode: "host"
     ports:
      - "3306:3306" 
     env:
