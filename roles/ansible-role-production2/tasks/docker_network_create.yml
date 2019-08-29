@@ -1,7 +1,7 @@
 ---
 - name: create network for tomcat and mysql
   docker_network:
-    name: database_network
+    name: host
     connected:
       - "{{ tomcat_container }}"
       - "{{ mysql_container }}"
